@@ -25,10 +25,10 @@ function onLoadMore() {
 }
 
 
-// const user = {
-//     name: 'Viktor',
-//     age: 36,
-// }
+const user = {
+    name: 'Viktor',
+    age: 36,
+}
 
 // function renderFotoCard(fotoCardJSON) {
 //     refs.container.innerHTML = fotoCardJSON(fotoCardJSON);
