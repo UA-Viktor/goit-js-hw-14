@@ -1,38 +1,58 @@
 import FotoServiceApi from './js/foto-service-api';
-// import fotoCardJSON from './templates/foto-card.hbs'
+import LoadMoreStatusBtn from './js/load-more-btn';
 
 const refs = {
     searchForm: document.querySelector('.search-form'),
     container: document.querySelector('.gallery'),
-    loadMoreBtn: document.querySelector('.load-more'),
 }
 
 refs.searchForm.addEventListener('submit', onSearch);
-refs.loadMoreBtn.addEventListener('click', onLoadMore);
+
+const loadMoreStatusBtn = new LoadMoreStatusBtn({
+    selector: '.load-more',
+    hidden: true,
+});
+
+loadMoreStatusBtn.refs.button.addEventListener('click', onLoadMore);
 
 const fotoServiceApi = new FotoServiceApi();
 
 function onSearch(e) {
     e.preventDefault();
 
-    fotoServiceApi.query = e.currentTarget.elements.searchQuery.value;
-    fotoServiceApi.resetPage(); 
-    fotoServiceApi.fotoArticles().then(({ data }) => refs.container.innerHTML = renderFotoCard(data.hits))
-// 
-    // fotoServiceApi.fotoArticles().then(data => {renderFotoCard(data)});
-    // fotoServiceApi.fotoArticles();
+    fotoServiceApi.query = e.currentTarget.elements.searchQuery.value.trim();
 
-        // .then(hits => {
-        //     refs.container.innerHTML = renderFotoCard(hits);
-        // }
-            
-        // );
-    
-}
+    if (fotoServiceApi.query === '') {
+        return alert('Пусто. Введите что то');
+    }
+
+    loadMoreStatusBtn.show();
+    loadMoreStatusBtn.disable();
+
+    fotoServiceApi.resetPage(); 
+
+    fotoServiceApi.fotoArticles().then(hits => {
+        if (hits.length === 0) {
+            return alert('Ничего не нашли');
+        } else {
+            clearContainerGallery();
+            renderCard(hits);
+            loadMoreStatusBtn.enable();
+        };
+    });
+};
 
 function onLoadMore() {
-    fotoServiceApi.fotoArticles();
-}
+    loadMoreStatusBtn.disable();
+    fotoServiceApi.fotoArticles().then(hits => { 
+        renderCard(hits);
+        loadMoreStatusBtn.enable();
+    })
+};
+
+function renderCard( data ) {
+    refs.container.insertAdjacentHTML('beforeend', renderFotoCard(data))
+};
 
 function renderFotoCard(searchData) {
     return searchData.map(({ webformatURL, tags, likes, views, comments, downloads }) => {
@@ -59,4 +79,8 @@ function renderFotoCard(searchData) {
             </div>
         </div>
     ` }).join('');
+};
+
+function clearContainerGallery() {
+    refs.container.innerHTML = '';
 };
