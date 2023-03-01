@@ -2,7 +2,7 @@ import axios from 'axios';
 
 const BASE_URL = 'https://pixabay.com/api/';
 const KEY = '33842682-eca7b00e850c4a3ea440c3225';
-const OPTIONS = 'image_type=photo&orientation=horizontal&safesearch=true&per_page=5';
+const OPTIONS = 'image_type=photo&orientation=horizontal&safesearch=true&per_page=8';
         
 export default class FotoServiceApi{
 

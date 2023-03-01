@@ -54,33 +54,88 @@ function renderCard( data ) {
     refs.container.insertAdjacentHTML('beforeend', renderFotoCard(data))
 };
 
-function renderFotoCard(searchData) {
-    return searchData.map(({ webformatURL, tags, likes, views, comments, downloads }) => {
-        return `
-            <div class="photo-card">
-            <img src="${webformatURL}" alt="${tags}" loading="lazy" />
-            <div class="info">
-                <p class="info-item">
-                <b>Likes</b>
-                ${likes}
-                </p>
-                <p class="info-item">
-                <b>Views</b>
-                ${views}
-                </p>
-                <p class="info-item">
-                <b>Comments</b>
-                ${comments}
-                </p>
-                <p class="info-item">
-                <b>Downloads</b>
-                ${downloads}
-                </p>
-            </div>
-        </div>
-    ` }).join('');
-};
 
 function clearContainerGallery() {
     refs.container.innerHTML = '';
 };
+// mx-auto d-block
+function renderFotoCard(searchData) {
+    return searchData.map(({ webformatURL, tags, likes, views, comments, downloads }) => {
+        return `
+        
+
+
+                <div class="col">
+                    <div class="card shadow-sm">
+                        <div class="" style="height: 225px;">
+                            <img src="${webformatURL}"
+                                class="img-fluid bd-placeholder-img card-img-top" width="100%" alt="${tags}" loading="lazy">
+                        </div>
+                        <div class="card-body d-flex text-center mt-2">
+
+                            <div class="m-1">
+                                <p class="card-text">Likes</p>
+                                <small class="text-muted">${likes}</small>
+                            </div>
+
+                            <div class="m-1">
+                                <p class="card-text">Views</p>
+                                <small class="text-muted">${views}</small>
+                            </div>
+
+                            <div class="m-1">
+                                <p class="card-text">Comments</p>
+                                <small class="text-muted">${comments}</small>
+                            </div>
+
+                            <div class="m-1">
+                                <p class="card-text">Downloads</p>
+                                <small class="text-muted">${downloads}</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+
+    ` }).join('');
+};
+
+
+{/* <div class="col">
+    <div class="photo-card card shadow-sm">
+        <div class="clearfix">
+            <img src="${webformatURL}" alt="${tags}" class="img-fluid" loading="lazy" />
+        </div>
+        <div class="container text-center fs-6">
+            <div class="row row-cols-4">
+                <div class="col p-1">
+                    <p class="in fo-item fw-lighter text-sm-start">
+                        <b>Likes</b>
+                        ${likes}
+                    </p>
+                </div>
+                <div class="col p-1">
+                    <p class="info-item fw-lighter text-sm-start">
+                        <b>Views</b>
+                        ${views}
+                    </p>
+                </div>
+                <div class="col p-1">
+                    <p class="info-item fw-lighter text-sm-start">
+                        <b>Comments</b>
+                        ${comments}
+                    </p>
+                </div>
+
+                <div class="col p-1">
+                    <p class="info-item fw-lighter text-sm-start">
+                        <b>Downloads</b>
+                        ${downloads}
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> */}
